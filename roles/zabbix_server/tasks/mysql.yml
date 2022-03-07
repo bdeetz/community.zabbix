@@ -45,7 +45,7 @@
     login_unix_socket: "{{ zabbix_server_mysql_login_unix_socket | default(omit) }}"
     name: "{{ zabbix_server_dbuser }}"
     password: "{{ zabbix_server_dbpassword }}"
-    priv: "{{ zabbix_server_dbname }}.*:ALL"
+    priv: "{{ zabbix_server_dbname + '.*:ALL' }}"
     host: "{{ zabbix_server_privileged_host }}"
     state: present
     append_privs: true
@@ -54,6 +54,31 @@
   tags:
     - zabbix-server
     - database
+
+
+
+
+
+
+#- name: Create zabbix database user
+#  become: true
+#  community.mysql.mysql_user:
+#    login_unix_socket: /var/run/mysqld/mysqld.sock
+#    login_user: "root"
+#    login_password: "root"
+#    name: "zabbix"
+#    password: "zabbix"
+#    priv: '*.*:ALL'
+#    host: "%"
+#    append_privs: true
+
+
+
+
+
+
+
+
 
 - name: "Get the file for create.sql >= 3.0"
   shell: ls -1 {{ datafiles_path }}/{{ 'create' if zabbix_version is version('6.0', '<') else 'server' }}.sq*
