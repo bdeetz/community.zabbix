@@ -48,6 +48,7 @@
     priv: "{{ zabbix_server_dbname }}.*:ALL"
     host: "{{ zabbix_server_privileged_host }}"
     state: present
+    append_privs: true
   when: zabbix_database_creation
   delegate_to: "{{ delegated_dbhost }}"
   tags:
